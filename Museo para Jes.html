@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#100b20">
+<meta name="description" content="Un museo fantástico, interactivo y hecho con amor para Jess.">
+<title>El Museo de Nuestra Historia · Jess y Leandro</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap');
+:root{--gold:#f1d199;--cream:#fff3d9;--soft:#d7c4da;--line:#e7bd8070;--night:#100b20}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--cream);background:var(--night);font:20px 'Cormorant Garamond',Georgia,serif;overflow-x:hidden}
+button{font:inherit;cursor:pointer}button:focus-visible{outline:2px solid var(--gold);outline-offset:4px}button:disabled{opacity:.7;cursor:default}.hidden{display:none!important}
+#sky{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse at 50% 40%,#503050,transparent 68%),linear-gradient(#080914,#1c122e 65%,#090817)}.star{position:absolute;width:3px;height:3px;border-radius:50%;background:#ffe7ad;box-shadow:0 0 9px #ffe5a1;animation:twinkle 3s infinite alternate}@keyframes twinkle{from{opacity:.15;transform:scale(.6)}to{opacity:1;transform:scale(1.3)}}
+#trail{position:fixed;inset:0;pointer-events:none;z-index:100}.trail-dot{position:absolute;color:#ffe2a5;font-size:15px;animation:trail .8s forwards}@keyframes trail{to{opacity:0;transform:translateY(-34px) scale(.2)}}
+#fade{position:fixed;inset:0;z-index:110;pointer-events:none;opacity:0;background:radial-gradient(circle,#f6dca34d,#3b2358 62%,#0b071a);transition:opacity .4s}#fade.on{opacity:1}#fade:after{content:'✦';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:85px;color:#ffe6af;text-shadow:0 0 35px #ffe3a2}
+#hud{position:fixed;z-index:60;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:5px;padding:11px 14px;background:linear-gradient(#100b20ee,#100b2090,transparent)}#hud strong{font:600 10px Montserrat,Arial,sans-serif;letter-spacing:1px;color:var(--gold)}.actions{display:flex;gap:7px}.hud-btn{color:var(--cream);border:1px solid var(--line);border-radius:99px;padding:9px 12px;background:#281a39e8;font:10px Montserrat,Arial,sans-serif}#back{display:none}#back.visible{display:block}#meterTop{height:3px;position:fixed;top:0;left:0;z-index:80;background:linear-gradient(90deg,#d788b5,#ffe2a1);width:0;transition:width .4s}
+.scene{position:relative;min-height:100vh;min-height:100dvh;padding:95px 18px 80px;animation:appear .6s both}.center{display:flex;align-items:center;justify-content:center}.wrap{width:100%;max-width:1040px;margin:auto;text-align:center}@keyframes appear{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}@keyframes float{50%{transform:translateY(-10px)}}
+h1,h2,h3{font-weight:500;line-height:1.14}h1{font-size:clamp(45px,8vw,85px);margin:20px 0}h2{font-size:clamp(36px,6vw,63px);margin:16px 0}h3{font-size:clamp(25px,3vw,33px)}.kicker{font:10px Montserrat,Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;color:var(--gold)}.intro{color:var(--soft);font-size:clamp(18px,2.8vw,23px);max-width:660px;line-height:1.65;margin:22px auto 30px}.symbol{display:block;font-size:58px;filter:drop-shadow(0 0 22px #f6d08e);animation:float 5s infinite}.btn{border:1px solid #ffe5aa;border-radius:4px;background:linear-gradient(125deg,#f8dea7,#b78952);color:#26152c;font:600 11px Montserrat,Arial,sans-serif;letter-spacing:1px;text-transform:uppercase;padding:15px 25px;transition:.25s}.btn:hover{transform:translateY(-3px);box-shadow:0 0 30px #f7cf8e80}.btn.alt{background:#2d1e3bce;color:var(--cream)}.glass{background:linear-gradient(145deg,#6547717b,#201429de);border:1px solid var(--line);border-radius:17px;box-shadow:0 15px 40px #0003}.small{font:10px Montserrat,Arial,sans-serif;letter-spacing:1.1px;color:var(--gold);text-transform:uppercase}.footer{color:#c4a8c9;font:10px Montserrat,Arial,sans-serif;letter-spacing:2px;margin-top:50px}
+/* Entrada y castillo */
+#home:before{content:'✦';position:absolute;left:17%;top:20%;font-size:30px;color:#dfaccd;opacity:.5}#home:after{content:'♥';position:absolute;right:13%;bottom:20%;font-size:36px;color:#e9a6ca;opacity:.5}.castle{position:relative;width:min(450px,94vw);height:430px;margin:25px auto}.tower{position:absolute;bottom:0;width:19%;height:73%;background:linear-gradient(90deg,#1c142d,#654762,#26162d);border:2px solid #bd9663}.tower.left{left:0}.tower.right{right:0}.tower:before{content:'';position:absolute;left:-12%;right:-12%;top:-60px;height:65px;background:#382741;clip-path:polygon(50% 0,100% 100%,0 100%)}.arch{position:absolute;inset:0 18%;border:7px ridge #c8a36e;border-bottom:0;border-radius:48% 48% 0 0/25% 25% 0 0;background:radial-gradient(#b38cc1,#482f54 62%,#140c24);box-shadow:0 0 45px #dab47472}.arch:after{content:'✧';position:absolute;top:33%;left:39%;font-size:70px;color:#fff1c9}.doors{position:absolute;inset:25% 18% 0;display:flex;perspective:850px}.door{width:50%;background:repeating-linear-gradient(90deg,#34253b 0 24px,#aa7d55 26px 28px,#4d3147 30px 50px);border:2px solid #dfb37a;transition:transform 1.8s}.door:first-child{transform-origin:left}.door:last-child{transform-origin:right}.castle.open .door:first-child{transform:rotateY(-110deg)}.castle.open .door:last-child{transform:rotateY(110deg)}.portal-label{position:absolute;z-index:3;top:39%;width:100%;text-align:center;pointer-events:none;text-shadow:0 2px 10px #110b20}.portal-label h2{font-size:42px}.portal-label p{font-size:17px}
+/* Gran salón fantástico */
+.hall{position:relative;isolation:isolate;max-width:990px;min-height:690px;margin:30px auto;padding:140px 75px 50px;overflow:hidden;border:1px solid #d3aa78;border-radius:26px;background:radial-gradient(ellipse at 50% 25%,#8c679f52,transparent 50%),linear-gradient(90deg,#130d25,#433052 18%,#2d1d3d 50%,#433052 82%,#130d25);box-shadow:0 30px 75px #070412a0,inset 0 0 85px #05030f}.hall:before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 104px,#e2bd8715 108px 110px);pointer-events:none}.hall-arch{position:absolute;top:-135px;left:19%;width:62%;height:310px;border:5px double #d1af7b99;border-radius:50% 50% 25% 25%}.window{position:absolute;left:50%;top:42px;transform:translateX(-50%);width:112px;height:168px;border:5px double #f0d399;border-radius:80px 80px 6px 6px;display:grid;place-items:center;background:radial-gradient(#c9a4e080,#583977 62%,#1c112e);box-shadow:0 0 50px #caa6ec55}.window span{font-size:55px;color:#ffebb4;filter:drop-shadow(0 0 25px #ffe19b)}.column{position:absolute;top:115px;bottom:0;width:75px;border-left:4px solid #bda174;border-right:4px solid #bda174;background:linear-gradient(90deg,#150d25,#69516b,#24162c)}.column.left{left:32px}.column.right{right:32px}.column:before{content:'';position:absolute;left:-13px;right:-13px;top:-17px;height:24px;border:2px solid #ccae7c;background:#5d4961}.torch{position:absolute;top:170px;color:#ffe6aa;font-size:35px;text-shadow:0 0 26px #ffd58b;animation:twinkle 2.2s alternate infinite}.torch.left{left:127px}.torch.right{right:127px}.floor{position:absolute;bottom:-50px;left:-25%;right:-25%;height:205px;transform:perspective(350px) rotateX(52deg);transform-origin:bottom;background:repeating-linear-gradient(90deg,#edc89123 0 2px,transparent 3px 90px),repeating-linear-gradient(0deg,#edc8911e 0 2px,transparent 3px 53px),linear-gradient(#543b59,#120c22)}.hall-heading{position:relative;z-index:2;margin:82px auto 20px;font:10px Montserrat,Arial,sans-serif;color:var(--gold);letter-spacing:2px}.doors-grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;max-width:755px;margin:auto}.room-btn{grid-column:span 2;min-height:125px;color:var(--cream);background:linear-gradient(140deg,#63476be9,#24152eea);border:1px solid #e6bd80;border-radius:13px;box-shadow:inset 0 0 0 4px #1f152d,inset 0 0 0 5px #d9b7805a,0 8px 21px #05030d;transition:.3s}.room-btn:hover{transform:translateY(-5px);box-shadow:0 0 35px #eebf8277}.room-btn .emoji{display:block;font-size:32px}.room-btn strong{display:block;font-size:21px;font-weight:500}.room-btn small{display:block;font:9px Montserrat,Arial,sans-serif;color:#dec5d0;margin:5px}.room-btn:nth-child(4){grid-column:2/span 2}.room-btn:nth-child(5){grid-column:4/span 2}.bonus-grid{position:relative;z-index:2;display:flex;justify-content:center;gap:12px;margin-top:13px}.bonus-grid .room-btn{width:34%;min-height:90px}.bonus-grid .room-btn strong{font-size:18px}.bonus-grid .room-btn .emoji{font-size:26px}
+/* Recuerdos */
+.timeline{max-width:770px;margin:35px auto;display:grid;gap:18px}.memory{display:block;text-align:left;padding:24px;color:var(--cream);transition:.25s;width:100%;cursor:pointer}.memory:hover{transform:translateY(-4px)}.memory .emoji{font-size:43px}.memory h3{margin:12px 0}.memory p{color:var(--soft);line-height:1.6;margin:8px 0 18px}.memory small{font:10px Montserrat,Arial,sans-serif;color:var(--gold)}
+/* Ventanas para recuerdos, libros y cápsulas */
+.overlay{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:15px;background:#06030eea;backdrop-filter:blur(11px)}.modal{position:relative;max-width:620px;width:100%;max-height:90dvh;overflow-y:auto;padding:38px 27px;text-align:center;border:1px solid var(--gold);border-radius:18px;background:radial-gradient(ellipse at top,#674673,#24172f 70%);box-shadow:0 0 60px #d2a46c56;animation:appear .4s}.modal-art{font-size:74px;filter:drop-shadow(0 0 17px #e9c285);pointer-events:none}.modal p{white-space:pre-line;font-size:21px;line-height:1.65}.modal-close{position:absolute;right:11px;top:11px;border:1px solid var(--gold);border-radius:50%;height:38px;width:38px;color:var(--cream);background:#1d122d;font-size:23px}
+/* Tulipanes */
+.garden{position:relative;max-width:910px;margin:28px auto;overflow:hidden;padding:35px 12px 65px;border:1px solid var(--line);border-radius:25px;background:radial-gradient(ellipse at bottom,#6c455d,#190f30 75%);box-shadow:inset 0 0 75px #060311}.garden:before{content:'☾';position:absolute;right:8%;top:17px;font-size:59px;color:#e9cd96}.garden:after{content:'';position:absolute;left:-10%;right:-10%;bottom:-32px;height:94px;border-radius:50% 50% 0 0;background:#113b36}.flowers{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:15px 6px}.flower{display:flex;flex-direction:column;align-items:center;justify-content:end;min-height:190px;padding:4px;color:var(--cream);background:none;border:0}.bud{position:relative;width:92px;height:108px;filter:drop-shadow(0 0 17px var(--glow));transition:transform .4s}.flower:hover .bud{transform:translateY(-6px)}.petal{position:absolute;left:50%;bottom:18px;width:29px;height:66px;border-radius:75% 75% 20% 20%/85% 85% 12% 12%;transform-origin:50% 100%;background:linear-gradient(var(--light),var(--dark));transition:transform .8s}.petal:nth-child(1){transform:translateX(-36px) rotate(-29deg) scale(.84);z-index:1}.petal:nth-child(2){transform:translateX(-23px) translateY(-10px) rotate(-10deg);z-index:2}.petal:nth-child(3){transform:translateX(-14px) translateY(-17px);z-index:4}.petal:nth-child(4){transform:translateX(-5px) translateY(-10px) rotate(10deg);z-index:3}.petal:nth-child(5){transform:translateX(8px) rotate(29deg) scale(.84);z-index:1}.flower.bloomed .petal:nth-child(1){transform:translateX(-42px) rotate(-42deg)}.flower.bloomed .petal:nth-child(2){transform:translateX(-25px) translateY(-15px) rotate(-18deg)}.flower.bloomed .petal:nth-child(3){transform:translateX(-14px) translateY(-26px) scale(1.08)}.flower.bloomed .petal:nth-child(4){transform:translateX(-2px) translateY(-15px) rotate(18deg)}.flower.bloomed .petal:nth-child(5){transform:translateX(14px) rotate(42deg)}.stem{height:62px;width:6px;position:relative;border-radius:6px;background:linear-gradient(90deg,#26553b,#83bb7e,#25583d)}.stem:before,.stem:after{content:'';position:absolute;width:30px;height:16px;background:#55946a}.stem:before{top:15px;left:0;border-radius:0 90% 0 90%;transform:rotate(-25deg)}.stem:after{top:35px;right:0;border-radius:90% 0 90% 0;transform:rotate(25deg)}.flower-name{font-size:17px;margin-top:7px}.flower small{font:9px Montserrat,Arial,sans-serif;color:var(--gold);margin-top:5px}.firefly{position:absolute;width:5px;height:5px;border-radius:50%;background:#ffe1a1;box-shadow:0 0 11px 4px #e9bb76bb;animation:float 3s alternate infinite}.result{max-width:720px;margin:20px auto;padding:24px;min-height:105px;font-size:clamp(22px,3vw,30px);line-height:1.5}
+/* Sueños */
+.cosmos{position:relative;max-width:910px;height:540px;overflow:hidden;margin:30px auto;border:1px solid var(--line);border-radius:24px;background:radial-gradient(ellipse,#4c3773,#0e0b26 76%)}.cosmos svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.cosmos polyline{fill:none;stroke:#ebcc96;stroke-width:1.2;stroke-dasharray:4 8;opacity:.6}.dream{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);width:135px;min-height:100px;background:none;border:0;color:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center}.dream .shine{font-size:55px;line-height:1;color:#ffe5a8;text-shadow:0 0 25px #ffd37c;animation:twinkle 2.5s alternate infinite}.dream.discovered .shine{filter:brightness(1.5)}.dream .name{font-size:17px}.dream small{font:9px Montserrat,Arial,sans-serif;color:var(--gold)}
+/* Carta y sobre */
+.envelope{position:relative;display:block;width:min(355px,82vw);height:230px;margin:75px auto 36px;border:0;background:none;perspective:900px;filter:drop-shadow(0 17px 30px #05030ab0);transition:transform .3s}.envelope:hover{transform:translateY(-5px)}.env-back{position:absolute;inset:0;background:#b184a0;border:2px solid var(--gold);border-radius:7px}.env-paper{position:absolute;z-index:2;inset:10% 11% 12%;padding-top:22px;background:#fff3df;color:#82556e;font-size:23px;transition:transform 1s .15s}.env-flap{position:absolute;z-index:5;top:0;width:100%;height:68%;background:linear-gradient(140deg,#e3b8ce,#a87398);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;backface-visibility:hidden;transition:transform .8s}.env-front{position:absolute;z-index:4;inset:0;background:linear-gradient(120deg,#95648d,#bd8daa);clip-path:polygon(0 32%,50% 75%,100% 32%,100% 100%,0 100%)}.seal{position:absolute;z-index:6;top:58%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;border:2px solid #ffe6bd;background:#bc658c;box-shadow:0 0 20px #f48fb9;display:grid;place-items:center;font-size:29px}.envelope.open .env-flap{transform:rotateX(180deg);z-index:1}.envelope.open .env-paper{transform:translateY(-110px)}.envelope.open .seal{opacity:0}.envelope.open{pointer-events:none}.paper{max-width:660px;margin:30px auto;padding:40px 35px;border:2px solid #d4a977;border-radius:5px;color:#614253;background:linear-gradient(145deg,#fff5e1,#f1d9b7);font-size:22px;line-height:1.78;text-align:left;box-shadow:0 22px 70px #0009;animation:appear .7s}.paper h3{text-align:center;color:#90556a;font-size:37px}.paper p{margin:18px 0}.signature{text-align:right;font-style:italic}
+/* Tiempo */
+.time-box{max-width:850px;margin:25px auto;padding:28px 16px}.clock-icon{display:block;font-size:66px;color:var(--gold);text-shadow:0 0 26px #ffe4a1;animation:float 5s infinite}.counter{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:740px;margin:25px auto}.tile{border:1px solid var(--line);border-radius:12px;padding:20px 5px;background:#1e152f}.tile strong{display:block;color:var(--cream);font:600 clamp(25px,5vw,46px) Montserrat,Arial,sans-serif;font-variant-numeric:tabular-nums}.tile small{color:var(--gold);font:10px Montserrat,Arial,sans-serif}.milestones{max-width:740px;display:grid;gap:11px;margin:25px auto}.milestone{display:flex;align-items:center;gap:15px;padding:17px;text-align:left}.milestone .emoji{font-size:32px}.milestone div{flex:1}.milestone h3{font-size:22px;margin:0}.milestone p{color:var(--soft);font-size:15px;margin:4px 0}.milestone small{color:var(--gold);font:10px Montserrat,Arial,sans-serif}.footnote{color:#c6b3c7;font-size:14px;max-width:700px;margin:18px auto}
+/* Biblioteca + cápsulas */
+.library{max-width:850px;margin:35px auto;padding:33px 18px;border:1px solid var(--line);border-radius:23px;background:radial-gradient(#73558252,#1d142e);box-shadow:inset 0 0 60px #05030b}.shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:700px;margin:auto;padding-bottom:14px;border-bottom:12px ridge #a87551}.book{height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border:2px solid #f1d3a0;border-radius:6px 16px 16px 6px;background:linear-gradient(90deg,#1a1126 0 10px,var(--cover) 13px,var(--cover) 90%,#261526);color:var(--cream);transition:transform .3s}.book:hover{transform:translateY(-12px)}.book .emoji{font-size:42px}.book strong{font-size:21px;line-height:1.1}.book small{font:9px Montserrat,Arial,sans-serif;color:var(--gold)}.capsules{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;max-width:800px;margin:35px auto}.capsule{min-height:165px;padding:20px;border:1px solid var(--line);border-radius:18px;background:radial-gradient(circle at top,#87547d77,#281833);color:var(--cream);transition:transform .3s}.capsule:hover{transform:translateY(-6px)}.capsule .emoji{display:block;font-size:43px}.capsule strong{display:block;font-size:23px}.capsule small{font:9px Montserrat,Arial,sans-serif;color:var(--gold)}
+/* Tesoro */
+.treasure{max-width:650px;padding:25px;margin:25px auto}.count{font:600 40px Montserrat,Arial,sans-serif;color:var(--gold)}.meter{max-width:470px;height:9px;border:1px solid var(--line);border-radius:99px;background:#120c20;overflow:hidden;margin:16px auto}.meter div{height:100%;width:0;background:linear-gradient(90deg,#bf76a1,#f5d28d);transition:width .4s}.reward-icon{font-size:85px;display:block;filter:drop-shadow(0 0 22px #e9c589)}#toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,25px);opacity:0;pointer-events:none;z-index:130;max-width:90vw;text-align:center;padding:12px 20px;border:1px solid var(--line);border-radius:12px;background:#281a35f0;color:var(--cream);font:12px Montserrat,Arial,sans-serif;transition:.3s}#toast.on{opacity:1;transform:translate(-50%,0)}
+@media(max-width:740px){#hud strong{font-size:9px}#hud{padding:10px 7px}.hud-btn{padding:8px;font-size:9px}.scene{padding:88px 11px 70px}.hall{padding:105px 13px 25px;min-height:710px}.column{width:26px}.column.left{left:7px}.column.right{right:7px}.torch{top:145px;font-size:25px}.torch.left{left:48px}.torch.right{right:48px}.window{top:35px;width:86px;height:135px}.hall-heading{margin:88px auto 16px;font-size:9px}.doors-grid{grid-template-columns:repeat(2,1fr);gap:9px}.room-btn,.room-btn:nth-child(4),.room-btn:nth-child(5){grid-column:auto;min-height:122px;padding:9px 3px}.room-btn:nth-child(5){grid-column:1/-1}.room-btn strong{font-size:17px}.room-btn .emoji{font-size:26px}.room-btn small{font-size:8px}.bonus-grid .room-btn{width:50%;min-height:90px}.bonus-grid .room-btn strong{font-size:15px}.flowers{gap:7px 2px}.flower{min-height:170px}.bud{transform:scale(.8);margin-bottom:-12px}.flower:hover .bud{transform:scale(.85)}.flower-name{font-size:13px}.flower small{font-size:8px}.dream{width:98px}.dream .shine{font-size:41px}.dream .name{font-size:13px}.dream small{font-size:8px}.counter{gap:5px}.tile{padding:15px 2px}.tile small{font-size:8px}.paper{padding:25px 19px;font-size:19px}.paper h3{font-size:30px}.book{height:180px;padding:7px}.book strong{font-size:16px}.book .emoji{font-size:31px}.shelf{gap:7px}.capsule{padding:14px 8px}.capsule strong{font-size:18px}}
+@media(max-width:410px){#hud strong{max-width:105px;line-height:1.4}.shelf{grid-template-columns:repeat(2,1fr)}.flowers{grid-template-columns:repeat(2,1fr)}.castle{height:370px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}.no-motion *, .no-motion *:before, .no-motion *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+
+/* ===== EDICIÓN CELESTIAL · NUEVOS ACABADOS VISUALES ===== */
+:root{--glow:#f1d199;--accent-rgb:185,115,186}
+body[data-scene="portal"]{--accent-rgb:212,156,101}
+body[data-scene="hall"]{--accent-rgb:199,142,210}
+body[data-scene="history"]{--accent-rgb:132,130,213}
+body[data-scene="garden"]{--accent-rgb:89,169,129}
+body[data-scene="dreams"]{--accent-rgb:100,125,233}
+body[data-scene="letter"]{--accent-rgb:226,135,173}
+body[data-scene="time"]{--accent-rgb:210,151,96}
+body[data-scene="library"]{--accent-rgb:155,113,202}
+body[data-scene="capsules"]{--accent-rgb:211,119,185}
+#sky{z-index:-1;transition:background 1s;}
+#sky::before{content:"";position:absolute;inset:-26%;pointer-events:none;background:conic-gradient(from 40deg at 54% 44%,transparent,rgba(var(--accent-rgb),.11),transparent 30%,#7053aa18,transparent 61%,rgba(var(--accent-rgb),.12),transparent);filter:blur(55px);animation:skyTurn 45s linear infinite}
+#sky::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 28%,#070613aa 100%)}
+@keyframes skyTurn{to{transform:rotate(360deg)}}
+#nebulaCanvas{position:absolute;inset:0;width:100%;height:100%;opacity:.92}
+.scene{isolation:isolate}
+.scene::after{content:"✦                  ✧                  ✦";position:absolute;top:15%;left:4%;right:4%;z-index:-1;text-align:center;white-space:nowrap;overflow:hidden;color:#fff0c53d;font-size:20px;letter-spacing:11vw;pointer-events:none;animation:backgroundRise 24s ease-in-out infinite alternate}
+@keyframes backgroundRise{from{transform:translateY(0);opacity:.4}to{transform:translateY(-32px);opacity:.85}}
+.kicker{font-weight:500;line-height:1.6;text-shadow:0 0 18px #efbc8280}
+#home h1{background:linear-gradient(110deg,#e3b994,#fff7e7 40%,#f7cce7 66%,#dbb48c);background-size:220% 100%;background-clip:text;-webkit-background-clip:text;color:transparent;animation:heroSheen 9s ease-in-out infinite alternate;filter:drop-shadow(0 8px 29px #edbc9355)}
+@keyframes heroSheen{from{background-position:0% 50%}to{background-position:100% 50%}}
+#home .symbol{position:relative;width:112px;height:112px;margin:0 auto 8px;display:grid;place-items:center;font-size:68px;border:1px solid #edc9937a;border-radius:50%;box-shadow:inset 0 0 38px #ecc89728,0 0 45px #eebf9c50}
+#home .symbol::before,#home .symbol::after{content:"";position:absolute;inset:-15px;border:1px dashed #dcb58b91;border-radius:50%;animation:heroOrbit 23s linear infinite}
+#home .symbol::after{inset:-28px;border:1px dotted #d3a5ce76;animation-duration:32s;animation-direction:reverse}
+@keyframes heroOrbit{to{transform:rotate(360deg)}}
+.btn{position:relative;overflow:hidden;isolation:isolate;box-shadow:0 7px 22px #cc93523b,inset 0 1px 0 #ffffff80;letter-spacing:1.35px}
+.btn::after{content:"";position:absolute;inset:-70% auto -70% -60%;width:32%;background:linear-gradient(90deg,transparent,#ffffff9c,transparent);transform:rotate(23deg);transition:left .6s ease;z-index:-1}
+.btn:hover::after{left:130%}
+.btn:active,.room-btn:active,.book:active,.capsule:active{transform:scale(.98)}
+.glass{backdrop-filter:blur(8px);box-shadow:inset 0 1px #fff4d61a,0 18px 43px #05020c73,0 0 27px rgba(var(--accent-rgb),.11);transition:border-color .3s,box-shadow .3s,transform .3s}
+.glass:hover{border-color:#f3d99ac9;box-shadow:inset 0 1px #ffefcb26,0 24px 45px #05020caa,0 0 36px rgba(var(--accent-rgb),.2)}
+.hall{--hx:0px;--hy:0px;--spotx:50%;--spoty:40%;background:radial-gradient(circle at var(--spotx) var(--spoty),#e9c09327,transparent 42%),radial-gradient(ellipse at 50% 25%,#8c679f52,transparent 50%),linear-gradient(90deg,#130d25,#433052 18%,#2d1d3d 50%,#433052 82%,#130d25);box-shadow:0 35px 95px #060311d9,inset 0 0 108px #05030f,0 0 20px #f0cda526}
+.hall::after{content:"";position:absolute;z-index:1;inset:-20% 0;pointer-events:none;background:linear-gradient(110deg,transparent 24%,#f9d1ac0c 43%,#ffeac02b 50%,#f9d1ac08 57%,transparent 73%);transform:skewX(-12deg) translateX(-65%);animation:lightPass 13s ease-in-out infinite alternate}
+@keyframes lightPass{from{transform:skewX(-12deg) translateX(-65%)}to{transform:skewX(-12deg) translateX(65%)}}
+.hall-arch{box-shadow:inset 0 -30px 45px #c597a411}
+.window{transform:translate(calc(-50% + var(--hx)),var(--hy));transition:transform .16s ease-out;box-shadow:0 0 50px #caa6ec66,0 0 115px #eed4bb25,inset 0 0 22px #ffefb822}
+.window::after{content:"";position:absolute;inset:-18px;border:1px solid #edc9954f;border-radius:inherit;box-shadow:0 0 20px #e6c99415}
+.column{box-shadow:inset 0 0 21px #0d061d88,0 0 30px #06030e66}
+.torch{animation:torchFire 2.8s ease-in-out infinite alternate}
+@keyframes torchFire{from{transform:scale(.9) translateY(3px);text-shadow:0 0 20px #ffd58b;opacity:.7}to{transform:scale(1.12) translateY(-5px);text-shadow:0 0 35px #fff1ba,0 0 90px #f2b66b;opacity:1}}
+.room-btn{position:relative;overflow:hidden;box-shadow:inset 0 0 0 4px #1f152d,inset 0 0 0 5px #d9b7805a,0 15px 28px #06030fba}
+.room-btn::after{content:"";position:absolute;top:-80px;left:-80px;width:95px;height:240px;pointer-events:none;background:linear-gradient(90deg,transparent,#fceac41c,transparent);transform:rotate(23deg);transition:transform .55s}
+.room-btn:hover::after{transform:translateX(360px) rotate(23deg)}
+.room-btn .emoji{transition:transform .3s,filter .3s;filter:drop-shadow(0 0 13px #eed5a566)}
+.room-btn:hover .emoji{transform:scale(1.22) translateY(-3px);filter:drop-shadow(0 0 19px #ffe3a8)}
+.timeline{position:relative;padding-left:13px}
+.timeline:before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;background:linear-gradient(transparent,#e8bf8688 14%,#e9c98bb6 75%,transparent);box-shadow:0 0 15px #e8c98b55}
+.memory{position:relative}
+.memory:before{content:"";position:absolute;left:-22px;top:41px;height:15px;width:15px;border-radius:50%;background:#f6dfab;border:2px solid #5b3b61;box-shadow:0 0 21px #f6cd92}
+.memory:after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(circle at 14% -22%,#f4cda724,transparent 50%)}
+.garden{background:radial-gradient(circle at 60% 10%,#b685b226,transparent 40%),radial-gradient(ellipse at bottom,#6c455d,#190f30 75%);box-shadow:inset 0 0 95px #060311,0 0 45px #dcad7850}
+.garden .flower{position:relative;animation:flowerBreathe 4.5s ease-in-out infinite alternate;animation-delay:calc(var(--i,0)*-.5s)}
+@keyframes flowerBreathe{from{translate:0 0}to{translate:0 -8px}}
+.flower.bloomed{filter:drop-shadow(0 0 15px var(--glow))}
+.flower.bloomed .flower-name{color:#fff4dc;text-shadow:0 0 10px #f5d7b8}
+.flower.bloomed::after{content:'✦';position:absolute;align-self:center;color:#fff1cc;font-size:17px;translate:55px -145px;text-shadow:0 0 15px #f6dca4;animation:twinkle 1.7s infinite alternate;pointer-events:none}
+.cosmos{background:radial-gradient(circle at 49% 43%,#7e5ca133,transparent 55%),radial-gradient(ellipse,#4c3773,#0e0b26 78%);box-shadow:inset 0 0 90px #070514,0 0 42px #aa8cdd40}
+.cosmos:before{content:"";position:absolute;inset:0;background-image:radial-gradient(2px 2px at 14% 38%,#fff2cf 99%,transparent),radial-gradient(2px 2px at 67% 19%,#edd9ff 99%,transparent),radial-gradient(2px 2px at 89% 80%,#fff2cf 99%,transparent),radial-gradient(1px 1px at 40% 52%,#fff 99%,transparent);background-size:240px 200px;opacity:.65}
+.cosmos:after{content:'';position:absolute;z-index:0;top:14%;left:-40%;width:45%;height:2px;background:linear-gradient(90deg,transparent,#fff4cf,transparent);transform:rotate(-22deg);box-shadow:0 0 18px 3px #e8d2ff66;animation:comet 12s ease-in-out infinite;pointer-events:none}
+@keyframes comet{0%,35%{translate:0 0;opacity:0}45%{opacity:1}65%,100%{translate:280% 170px;opacity:0}}
+.dream{z-index:1}.dream::before{content:'';position:absolute;left:50%;top:18%;width:70px;height:70px;transform:translate(-50%,-50%);border:1px solid #e6c99b33;border-radius:50%;box-shadow:inset 0 0 28px #e3c28e15;opacity:0;transition:opacity .3s,scale .3s;pointer-events:none}.dream.discovered::before{opacity:1;scale:1.4}
+.dream.discovered .shine{color:#fffef1;text-shadow:0 0 30px #ffebbf,0 0 60px #f3ca7c}
+.envelope{animation:envelopeHover 6s ease-in-out infinite alternate}@keyframes envelopeHover{to{transform:translateY(-9px)}}
+.envelope:not(.open) .seal{animation:sealPulse 2.6s ease-in-out infinite alternate}@keyframes sealPulse{to{box-shadow:0 0 28px #ffc2dd,0 0 58px #f99fc999;scale:1.06}}
+.paper{position:relative;background:repeating-linear-gradient(0deg,#c49b6b0c 0 1px,transparent 1px 40px),linear-gradient(145deg,#fff5e1,#f1d9b7);box-shadow:0 26px 80px #0009,0 0 35px #f1d5ad34}
+.paper:before{content:'✧   ♥   ✧';display:block;text-align:center;letter-spacing:9px;color:#b97e8b;font-size:20px}
+.clock-icon{filter:drop-shadow(0 0 20px #f1bf7c)}
+.tile{position:relative;overflow:hidden;box-shadow:inset 0 0 22px #e2bb7810}
+.tile:before{content:'';position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,#fff2bfbd,transparent)}
+.tile strong{text-shadow:0 0 22px #f8d79e40}
+.library{position:relative;background:radial-gradient(ellipse at top,#a37da83a,transparent 70%),linear-gradient(110deg,#1e172c,#3f2d49 48%,#20162e);box-shadow:inset 0 0 80px #070411,0 20px 42px #05030d99}
+.library:before{content:'✧';position:absolute;left:6%;top:16px;color:#fff0ccaa;font-size:25px;animation:twinkle 3s alternate infinite}
+.book{transform-origin:bottom;transform-style:preserve-3d;box-shadow:-7px 9px 0 #0c0a1a,0 18px 26px #07041166,inset 7px 0 10px #fff0cb23}
+.book:hover{transform:translateY(-14px) rotateY(-8deg);box-shadow:-10px 14px 0 #100d1d,0 25px 36px #070411b8,inset 7px 0 15px #fff0cb40}
+.capsule{position:relative;overflow:hidden;box-shadow:0 15px 36px #09041177,inset 0 0 45px #e9b6d310}
+.capsule:before{content:'✧';position:absolute;right:14px;top:9px;color:#ffe0b780;font-size:24px;animation:twinkle 3.2s alternate infinite}
+.capsule:hover{box-shadow:0 0 32px #e9a9c65c,0 20px 38px #090411bb}
+.modal{border-color:#f2d6a4;box-shadow:0 0 65px #d2a46c56,0 0 120px rgba(var(--accent-rgb),.18)}
+.modal-art{animation:float 4s ease-in-out infinite alternate}
+#fade{background:radial-gradient(circle at center,#f8e6c985 0%,#8b5f9175 29%,#3b2358 65%,#0b071a);backdrop-filter:blur(1px)}
+#fade.on:after{animation:gatewayPulse .45s ease-out both}
+@keyframes gatewayPulse{from{scale:.45;opacity:0}to{scale:1.2;opacity:1}}
+.burst{position:fixed;z-index:101;pointer-events:none;color:#ffeac7;text-shadow:0 0 12px #f6c778;transform:translate(-50%,-50%);animation:burstFly 1.1s var(--delay,0s) cubic-bezier(.11,.62,.32,1) forwards}
+@keyframes burstFly{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}12%{opacity:1}100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) rotate(var(--dr)) scale(.2);opacity:0}}
+#trail{z-index:151}
+#hud{box-shadow:0 5px 25px #07041132}
+#sound[aria-pressed="true"]{border-color:#eacb90;color:#fff2c7;background:linear-gradient(#6e4e60dd,#32233ddd);box-shadow:inset 0 0 16px #e0ac9630,0 0 16px #e8b48230}
+#toast{box-shadow:0 15px 35px #0008,0 0 18px #f2c08c28}
+@media(max-width:740px){.scene::after{letter-spacing:8vw;font-size:14px}.hall::after{opacity:.45}.hall{box-shadow:0 24px 60px #060311c0,inset 0 0 60px #05030f}.room-btn:hover::after{display:none}.memory::before{left:-19px;height:11px;width:11px}.timeline{padding-left:10px}.flower.bloomed::after{translate:40px -128px}}
+@media(prefers-reduced-motion:reduce){#sky:before,#sky:after,.burst{animation:none!important}.burst{display:none}}
+.no-motion #sky:before,.no-motion .burst{animation:none!important}.no-motion .burst{display:none}
+
+</style>
+</head>
+<body data-scene="home">
+<div id="sky" aria-hidden="true"></div><div id="trail" aria-hidden="true"></div><div id="fade"></div><div id="meterTop"></div>
+<header id="hud"><strong>✦ JESS & LEANDRO · 18.07.2026</strong><nav class="actions" aria-label="Controles del museo"><button class="hud-btn" id="back" onclick="go('hall')">← Salón</button><button class="hud-btn" id="sound" aria-pressed="true" onclick="toggleSound()">♪ Música lista</button><button class="hud-btn" id="motion" aria-pressed="false" onclick="toggleMotion()">✧ Efectos</button></nav></header>
+<main>
+<section class="scene center" id="home"><div class="wrap"><span class="symbol">✧</span><p class="kicker">Un lugar creado solamente para ti</p><h1>El Museo de<br>Nuestra Historia</h1><p class="intro">Hay historias que merecen ser contadas, recuerdos que merecen ser guardados y personas que merecen un universo entero. Este pequeño mundo es para ti, Jess.</p><p class="small">Desde el 18 de julio de 2026 ♥ · La música comienza al entrar</p><p><button class="btn" onclick="go('portal')">Descubrir nuestro mundo ✦</button></p><p class="footer">HECHO CON AMOR, PARA JESS</p></div></section>
+<section class="scene center hidden" id="portal"><div class="wrap"><p class="kicker">El comienzo de nuestra historia</p><div class="castle" id="castle"><div class="tower left"></div><div class="tower right"></div><div class="arch"></div><div class="doors"><div class="door"></div><div class="door"></div></div><div class="portal-label"><h2>Un mundo te espera</h2><p>Detrás de estas puertas se encuentra un lugar donde cada rincón guarda un pedacito de nosotros.</p></div></div><button class="btn" id="doorButton" onclick="openCastle()">Abrir las puertas ✨</button></div></section>
+<section class="scene hidden" id="hall"><div class="wrap"><p class="kicker">Bienvenida a nuestro mundo</p><h1>El gran salón de nuestra historia</h1><p class="intro">Siete salas, un mismo corazón. Cada puerta guarda una historia, una sorpresa y un pedacito de nuestro futuro.</p><div class="hall"><div class="hall-arch"></div><div class="window"><span>✶</span></div><div class="column left"></div><div class="column right"></div><span class="torch left">✦</span><span class="torch right">✦</span><div class="floor"></div><p class="hall-heading">EL MUSEO DE JESS ♥ LEANDRO</p><div class="doors-grid"><button class="room-btn" onclick="go('history')"><span class="emoji">📜</span><strong>Nuestra historia</strong><small>Recuerdos en vitrinas</small></button><button class="room-btn" onclick="go('garden')"><span class="emoji">🌷</span><strong>Las mil razones</strong><small>Seis tulipanes mágicos</small></button><button class="room-btn" onclick="go('dreams')"><span class="emoji">🌙</span><strong>Nuestros sueños</strong><small>La constelación secreta</small></button><button class="room-btn" onclick="go('letter')"><span class="emoji">💌</span><strong>Una carta para ti</strong><small>El sobre encantado</small></button><button class="room-btn" onclick="go('time')"><span class="emoji">⏳</span><strong>El tiempo a tu lado</strong><small>Reloj y aniversarios</small></button></div><div class="bonus-grid"><button class="room-btn" onclick="go('library')"><span class="emoji">📚</span><strong>Biblioteca del futuro</strong></button><button class="room-btn" onclick="go('capsules')"><span class="emoji">🔮</span><strong>Cápsulas del corazón</strong></button></div></div><div class="treasure glass"><p class="kicker">Tu recorrido por el museo</p><div class="count" id="count">0 <small class="small">de 20 secretos</small></div><div class="meter"><div id="treasureMeter"></div></div><p class="small">5 salas originales · 3 recuerdos · 6 tulipanes · 5 estrellas · 1 carta</p><button id="chestButton" class="btn hidden" onclick="openChest()">✦ Abrir el cofre secreto ✦</button></div><p class="footer">NUESTRA HISTORIA APENAS COMIENZA ♥</p></div></section>
+<section class="scene hidden" id="history"><div class="wrap"><span class="symbol">📜</span><p class="kicker">Exposición uno</p><h2>Nuestra historia</h2><p class="intro">Cada recuerdo es una pequeña obra de arte. Toca las vitrinas para descubrir su historia.</p><div class="timeline" id="memories"></div><button class="btn alt" onclick="go('hall')">Volver al salón ✦</button></div></section>
+<section class="scene hidden" id="garden"><div class="wrap"><span class="symbol">🌷</span><p class="kicker">Exposición dos</p><h2>El jardín de las mil razones</h2><p class="intro">Mi amor, planté seis tulipanes mágicos para ti. Cada uno guarda una razón por la que eres especial. Tócalos para que florezcan.</p><div class="garden"><div id="fireflies"></div><div class="flowers" id="flowers"></div></div><p class="small" id="flowerCount">0 de 6 tulipanes descubiertos</p><div class="result glass" id="flowerMessage" role="status" aria-live="polite">Elige un tulipán para ver cómo despierta su magia, Jess. ✨</div><div class="result glass hidden" id="gardenFinal"><h3>Has hecho florecer nuestro jardín 💖</h3><p>Estas son solo seis razones, pero cada día descubro nuevas cosas que me encantan de ti. Nuestro jardín seguirá creciendo contigo.</p></div><button class="btn alt" onclick="go('hall')">Volver al salón ✦</button></div></section>
+<section class="scene hidden" id="dreams"><div class="wrap"><span class="symbol">🌙</span><p class="kicker">Exposición tres</p><h2>La constelación de nuestros sueños</h2><p class="intro">Quiero seguir llenando el cielo de sueños contigo. Descubre las cinco estrellas y desbloquea una sexta.</p><div class="cosmos"><svg viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true"><polyline points="170,156 430,108 760,186 740,438 260,432 170,156"/></svg><div id="dreamStars"></div></div><p class="small" id="dreamCount">0 de 5 estrellas descubiertas</p><div class="result glass" id="dreamMessage">Toca una estrella para descubrir nuestros sueños. ✨</div><div class="result glass hidden" id="dreamFinal"><h3>Nuestro cielo apenas comienza 💫</h3><p>Quiero seguir soñando, viajando, riendo y construyendo recuerdos contigo.</p></div><button class="btn alt" onclick="go('hall')">Volver al salón ✦</button></div></section>
+<section class="scene hidden" id="letter"><div class="wrap"><span class="symbol">💌</span><p class="kicker">Exposición cuatro</p><h2>Una carta para ti</h2><p class="intro">Hay palabras que prefiero guardar en un lugar especial. Este sobre tiene unas cuantas de ellas, mi amor.</p><button class="envelope" id="envelope" onclick="openLetter()" aria-label="Abrir carta para Jess"><span class="env-back"></span><span class="env-paper">Para Jess ♥</span><span class="env-flap"></span><span class="env-front"></span><span class="seal">♥</span></button><p class="small" id="letterHint">✦ Toca el sello para abrir tu carta ✦</p><article class="paper hidden" id="paper"><h3>Mi amor, Jess ❤️</h3><p>Quería crear algo diferente para ti. Algo que no fuera solamente un regalo, sino un pequeño lugar donde pudieras encontrar una parte de nosotros.</p><p>Desde aquel 18 de julio, cuando te pedí que fueras mi novia con un ramo de flores, comenzamos a escribir una historia que quiero seguir disfrutando contigo.</p><p>Me encanta tu sonrisa, tu forma de ser y esos pequeños detalles que te hacen tan especial para mí.</p><p>Quiero seguir viajando contigo, conocer lugares nuevos, reírnos, superar dificultades y crear recuerdos.</p><p>No sé cuántos capítulos tendrá nuestra historia, pero sí sé que quiero seguir escribiéndolos a tu lado.</p><p class="signature">Con todo mi cariño,<br>Leandro ❤️</p><button class="btn" onclick="closeLetter()">Guardar la carta en su sobre ✦</button></article><p><button class="btn alt" onclick="go('hall')">Volver al salón ✦</button></p></div></section>
+<section class="scene hidden" id="time"><div class="wrap"><span class="symbol">⏳</span><p class="kicker">Exposición cinco</p><h2>El tiempo a tu lado</h2><p class="intro">El 18 de julio de 2026 comenzó una nueva etapa de nuestra historia. Desde entonces, cada día es una página más.</p><div class="time-box glass"><span class="clock-icon">✧</span><p class="kicker">Tiempo desde que nos hicimos novios</p><div class="counter"><div class="tile"><strong id="days">0</strong><small>Días</small></div><div class="tile"><strong id="hours">00</strong><small>Horas</small></div><div class="tile"><strong id="minutes">00</strong><small>Minutos</small></div><div class="tile"><strong id="seconds">00</strong><small>Segundos</small></div></div><p class="intro">«El tiempo pasa, pero cada segundo contigo sigue siendo mi favorito».</p></div><p class="footnote">Usamos las 00:00 del 18 de julio, hora de São Paulo, porque todavía no sabemos la hora exacta en que os hicisteis novios.</p><h2 style="font-size:40px;margin-top:55px">Nuestro libro de aniversarios</h2><div class="milestones" id="anniversaries"></div><div class="result glass"><p class="kicker">Próximo aniversario</p><h3 id="nextAnniversary">Calculando...</h3><p id="nextCountdown"></p></div><button class="btn alt" onclick="go('hall')">Volver al salón ✦</button></div></section>
+<section class="scene hidden" id="library"><div class="wrap"><span class="symbol">📚</span><p class="kicker">La biblioteca de lo que vendrá</p><h2>La Biblioteca del Futuro</h2><p class="intro">Entre estos libros están algunos de los capítulos que todavía quiero escribir contigo. Toca cada libro para leerlo.</p><div class="library"><div class="shelf" id="books"></div></div><button class="btn alt" onclick="go('hall')">Volver al salón ✦</button></div></section>
+<section class="scene hidden" id="capsules"><div class="wrap"><span class="symbol">🔮</span><p class="kicker">Pequeños mensajes, grandes sentimientos</p><h2>Las Cápsulas del Corazón</h2><p class="intro">No todos los días serán iguales. Aquí tienes palabras para abrir cuando más las necesites.</p><div class="capsules" id="capsulesGrid"></div><button class="btn alt" onclick="go('hall')">Volver al salón ✦</button></div></section>
+</main>
+<div id="overlay" class="overlay hidden" onclick="if(event.target===this)closeModal()"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="modalClose" onclick="closeModal()" aria-label="Cerrar ventana">×</button><div class="modal-art" id="modalArt"></div><p class="kicker" id="modalLabel"></p><h2 id="modalTitle"></h2><p id="modalText"></p><button class="btn" onclick="closeModal()">Volver al museo ✦</button></div></div>
+<div id="chest" class="overlay hidden" onclick="if(event.target===this)closeChest()"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="chestTitle"><button class="modal-close" onclick="closeChest()" aria-label="Cerrar cofre">×</button><span class="reward-icon">👑</span><p class="kicker">El secreto final</p><h2 id="chestTitle">Jess, este museo es tuyo</h2><p>Has descubierto cada rincón de este pequeño mundo. Aquí hay siete salas, pero lo que siento por ti no cabe en ninguna.</p><p>Gracias por darle vida a nuestra historia. Lo mejor todavía está por llegar: todo lo que viviremos juntos. ❤️</p><button class="btn" onclick="closeChest()">Guardar nuestro secreto ✦</button></div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const START=new Date('2026-07-18T00:00:00-03:00');
+/* Cada nueva visita empieza sin secretos descubiertos. Nada se guarda. */
+const foundFlowers=new Set(),foundDreams=new Set(),foundMemories=new Set(),visited=new Set();
+let openedLetter=false,active='home',busy=false,letterTimer=null,lastFocus=null,toastTimer=null;
+let muted=false,audio=null,audioStarted=false,ambientTimer=null,ambientIndex=0;
+let motionOff=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function save(){/* El progreso vive solo durante esta visita. */}
+window.addEventListener('pageshow',e=>{if(e.persisted)location.reload()});
+function notify(s){clearTimeout(toastTimer);$('toast').textContent=s;$('toast').classList.add('on');toastTimer=setTimeout(()=>$('toast').classList.remove('on'),2400)}
+for(let i=0;i<100;i++){const s=document.createElement('i');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*4+'s';$('sky').appendChild(s)}
+/* Música original generada en tiempo real. Inicialmente ACTIVADA.
+   Chrome permite audio audible cuando hay una interacción del visitante. */
+function note(freq,duration=.4,gain=.012,delay=0,wave='sine'){
+  if(muted||!audio||audio.state!=='running')return;
+  const t=audio.currentTime+delay,osc=audio.createOscillator(),vol=audio.createGain();
+  osc.type=wave;osc.frequency.setValueAtTime(freq,t);
+  vol.gain.setValueAtTime(.0001,t);
+  vol.gain.exponentialRampToValueAtTime(Math.max(.00015,gain),t+.08);
+  vol.gain.exponentialRampToValueAtTime(.0001,t+Math.max(.15,duration));
+  osc.connect(vol).connect(audio.destination);osc.start(t);osc.stop(t+duration+.08);
+}
+const chordSequence=[
+  {bass:130.81,notes:[261.63,329.63,392,523.25],melody:[659.25,523.25,392]},
+  {bass:110,notes:[220,261.63,329.63,440],melody:[523.25,440,329.63]},
+  {bass:98,notes:[196,246.94,293.66,392],melody:[493.88,392,293.66]},
+  {bass:146.83,notes:[293.66,349.23,440,587.33],melody:[698.46,587.33,440]}
+];
+function ambient(){
+  if(muted||!audioStarted||document.visibilityState==='hidden')return;
+  const chord=chordSequence[ambientIndex++%chordSequence.length];
+  note(chord.bass,5.9,.004,0,'sine');
+  chord.notes.forEach((f,i)=>note(f,5.7,.0032,i*.11,'sine'));
+  chord.melody.forEach((f,i)=>note(f,1.55,.0035,1+i*1.42,'triangle'));
+}
+function sound(kind){
+  if(muted||!audioStarted)return;
+  const tunes={door:[174.61,261.63,349.23],flower:[523.25,659.25,783.99],star:[784,987.77,1174.66],chest:[392,523.25,659.25,784]};
+  (tunes[kind]||tunes.star).forEach((n,i)=>note(n,.65,.009,i*.13,'sine'));
+}
+function renderSoundButton(){
+  $('sound').textContent=muted?'♫ Música apagada':audioStarted?'♪ Música activa':'♪ Música lista';
+  $('sound').setAttribute('aria-pressed',String(!muted));
+  $('sound').title=muted?'Activar música':'Desactivar música';
+}
+function startMusic(){
+  if(muted||audioStarted)return;
+  const C=window.AudioContext||window.webkitAudioContext;
+  if(!C){muted=true;renderSoundButton();notify('El navegador no permite audio.');return}
+  try{
+    audio??=new C();
+    audioStarted=true;
+    const resume=audio.resume();
+    if(resume&&resume.then){resume.then(()=>{if(!muted){ambient();sound('star')}}).catch(()=>{});}
+    else {ambient();sound('star');}
+    ambientTimer=setInterval(ambient,7100);
+    renderSoundButton();
+  }catch(e){muted=true;audioStarted=false;renderSoundButton();notify('No se pudo iniciar el audio.')}
+}
+function toggleSound(){
+  muted=!muted;
+  if(muted){clearInterval(ambientTimer);ambientTimer=null;}
+  else if(!audioStarted)startMusic();
+  else {audio.resume().catch(()=>{});ambient();if(!ambientTimer)ambientTimer=setInterval(ambient,7100)}
+  renderSoundButton();
+}
+/* El primer clic/tap o Enter inicia la música sin pedir otro paso. */
+document.addEventListener('pointerdown',e=>{
+  if(e.target.closest('#sound'))return;
+  startMusic();
+},{capture:true});
+document.addEventListener('keydown',e=>{
+  if((e.key==='Enter'||e.key===' ')&&e.target.id!=='sound')startMusic();
+});
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible'&&!muted&&audioStarted&&audio){audio.resume().catch(()=>{})}
+});
+renderSoundButton();
+function toggleMotion(){motionOff=!motionOff;document.body.classList.toggle('no-motion',motionOff);$('motion').textContent=motionOff?'✧ Sin efectos':'✧ Efectos';$('motion').setAttribute('aria-pressed',String(motionOff))}
+let trailLast=0;document.addEventListener('pointermove',e=>{if(motionOff||e.pointerType!=='mouse'||Date.now()-trailLast<75)return;trailLast=Date.now();const s=document.createElement('span');s.className='trail-dot';s.textContent='✦';s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';$('trail').appendChild(s);setTimeout(()=>s.remove(),800)});
+async function go(id){if(busy||active===id)return;if(!$(id))return;busy=true;if(!motionOff){$('fade').classList.add('on');await new Promise(r=>setTimeout(r,320))}document.querySelectorAll('.scene').forEach(e=>e.classList.add('hidden'));$(id).classList.remove('hidden');active=id;document.body.dataset.scene=id;$('back').classList.toggle('visible',!['home','portal','hall'].includes(id));visited.add(id);save();progress();window.scrollTo(0,0);if(id==='time')clock();if(!motionOff){await new Promise(r=>setTimeout(r,120));$('fade').classList.remove('on')}busy=false}
+async function openCastle(){if(busy)return;const b=$('doorButton');b.disabled=true;$('castle').classList.add('open');sound('door');await new Promise(r=>setTimeout(r,motionOff?250:1900));await go('hall');$('castle').classList.remove('open');b.disabled=false}
+/* 20 secretos: 5 salas originales, 3 recuerdos, 6 tulipanes, 5 sueños, 1 carta */
+function progress(){const five=['history','garden','dreams','letter','time'];const count=five.filter(x=>visited.has(x)||(x==='garden'&&visited.has('reasons'))).length+Math.min(3,foundMemories.size)+Math.min(6,foundFlowers.size)+Math.min(5,foundDreams.size)+(openedLetter?1:0);$('count').innerHTML=count+' <small class="small">de 20 secretos</small>';$('treasureMeter').style.width=count/20*100+'%';$('meterTop').style.width=count/20*100+'%';$('chestButton').classList.toggle('hidden',count<20)}
+function openModal(obj){lastFocus=document.activeElement;$('modalArt').textContent=obj.icon||'✧';$('modalLabel').textContent=obj.label||'';$('modalTitle').textContent=obj.title||'';$('modalText').textContent=obj.text||'';$('overlay').classList.remove('hidden');document.body.style.overflow='hidden';$('modalClose').focus();sound('star')}
+function closeModal(){$('overlay').classList.add('hidden');document.body.style.overflow='';lastFocus?.focus?.()}
+function openChest(){if($('chestButton').classList.contains('hidden'))return;$('chest').classList.remove('hidden');document.body.style.overflow='hidden';sound('chest');burstAtElement($('chest').querySelector('.reward-icon'),'♥',50)}
+function closeChest(){$('chest').classList.add('hidden');document.body.style.overflow=''}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('overlay').classList.contains('hidden'))closeModal();else if(!$('chest').classList.contains('hidden'))closeChest()}});
+const memories=[{icon:'💐',label:'18 de julio de 2026',title:'El día que comenzó nuestro nosotros',short:'En casa, con un ramo de flores, te pedí que fueras mi novia.',text:'Aquel 18 de julio, en mi casa, había un ramo de flores y una pregunta que quería hacerte.\n\nTe pedí que fueras mi novia, y desde entonces esa fecha tiene un significado precioso para mí.\n\nSi pudiera guardar un instante en una vitrina de este museo, sería ese: el comienzo de nuestra historia. ❤️'},{icon:'🏔️',label:'Una aventura inolvidable',title:'Nuestro viaje a Campos do Jordão',short:'Uno de los momentos más bonitos que hemos vivido juntos.',text:'De todos los recuerdos que hemos creado, nuestro viaje a Campos do Jordão ocupa un lugar especial.\n\nNo es solamente el lugar que visitamos, sino el hecho de haberlo compartido contigo.\n\nOjalá nos esperen muchos viajes, aventuras y recuerdos para guardar aquí. ✨'},{icon:'🌹',label:'Lo que adoro de ti',title:'Tu sonrisa y tu forma de ser',short:'Dos cosas que hacen especiales los momentos más sencillos.',text:'Hay cosas que no necesitan una fecha para ser importantes.\n\nTu sonrisa es una de mis cosas favoritas, y tu forma de ser es algo que me encanta de ti.\n\nLos detalles más hermosos de mi mundo también pueden ser los más sencillos. ❤️'}];
+memories.forEach((m,i)=>{const b=document.createElement('button');b.className='memory glass';b.innerHTML=`<span class="emoji">${m.icon}</span><p class="kicker">${m.label}</p><h3>${m.title}</h3><p>${m.short}</p><small>✦ TOCA PARA ABRIR ESTE RECUERDO</small>`;b.onclick=()=>{const first=!foundMemories.has(i);foundMemories.add(i);save();progress();openModal(m);if(first)burstAtElement(b,'✧',18)};$('memories').appendChild(b)});
+const tulips=[['Tu sonrisa','#ffcfde','#c83f78','#fa7eac'],['Tu forma de ser','#efc8ff','#8957bd','#d8a9ff'],['Los detalles','#ffe8b2','#db865a','#ffbf74'],['Ser tú misma','#afd9ff','#487ac7','#80b0ed'],['Nuestros momentos','#ffd2ec','#b34999','#ff8fd4'],['Lo especial que eres','#fff2bd','#caa23e','#f6c861']];
+const reasons=['Porque tu sonrisa tiene una manera especial de alegrarme el día. ❤️','Porque tu forma de ser es una de las cosas que más me encantan de ti. 🌷','Porque incluso los pequeños detalles tuyos significan mucho para mí. ✨','Porque me encanta que seas tú misma. 💗','Porque cada momento a tu lado puede convertirse en un recuerdo bonito. 🌸','Porque eres una persona muy especial en mi vida. ❤️'];
+tulips.forEach((f,i)=>{const b=document.createElement('button');b.className='flower';b.style.cssText=`--light:${f[1]};--dark:${f[2]};--glow:${f[3]}`;b.setAttribute('aria-label','Descubrir tulipán: '+f[0]);b.innerHTML='<span class="bud" aria-hidden="true">'+'<span class="petal"></span>'.repeat(5)+'</span><span class="stem"></span><span class="flower-name">'+f[0]+'</span><small>Toca para florecer</small>';b.onclick=()=>{const first=!foundFlowers.has(i);foundFlowers.add(i);$('flowerMessage').textContent=reasons[i];refreshFlowers();save();progress();sound('flower');if(first){burstAtElement(b,'✿',18);notify('Un tulipán ha despertado 🌷')}};$('flowers').appendChild(b)});
+function refreshFlowers(){tulips.forEach((f,i)=>{const b=$('flowers').children[i];b.classList.toggle('bloomed',foundFlowers.has(i));b.querySelector('small').textContent=foundFlowers.has(i)?'✦ Descubierto':'Toca para florecer'});$('flowerCount').textContent=foundFlowers.size+' de 6 tulipanes descubiertos';$('gardenFinal').classList.toggle('hidden',foundFlowers.size!==6)}
+for(let i=0;i<25;i++){const f=document.createElement('i');f.className='firefly';f.style.left=5+Math.random()*90+'%';f.style.top=6+Math.random()*82+'%';f.style.animationDelay=-Math.random()*5+'s';$('fireflies').appendChild(f)}
+const dreams=[['Viajar juntos','Sueño con descubrir lugares nuevos contigo y crear muchas aventuras. ✈️'],['Crear recuerdos','Sueño con seguir creando momentos que algún día recordemos sonriendo. 📸'],['Reír contigo','Sueño con reír muchísimas veces más a tu lado, incluso en los días sencillos. 😊'],['Superarlo todo','Deseo que podamos acompañarnos también cuando haya días difíciles. 🤍'],['Muchos capítulos más','Sueño con seguir escribiendo nuestra historia, página tras página. ♾️']];
+const positions=[[17,26],[43,18],[76,31],[74,73],[26,72]];
+dreams.forEach((d,i)=>{const b=document.createElement('button');b.className='dream';b.style.cssText=`--x:${positions[i][0]}%;--y:${positions[i][1]}%`;b.innerHTML=`<span class="shine">${i%2?'✧':'✦'}</span><span class="name">${d[0]}</span><small>Por descubrir</small>`;b.onclick=()=>{const first=!foundDreams.has(i);foundDreams.add(i);$('dreamMessage').textContent=d[1];refreshDreams();save();progress();sound('star');if(first)burstAtElement(b,'✦',22)};$('dreamStars').appendChild(b)});
+const last=document.createElement('button');last.className='dream hidden';last.style.cssText='--x:50%;--y:52%';last.innerHTML='<span class="shine">✶</span><span class="name">Nuestro futuro</span><small>Estrella especial</small>';last.onclick=()=>{$('dreamFinal').classList.remove('hidden');$('dreamMessage').textContent='Nuestro sueño más bonito es seguir construyendo un futuro juntos. 💖';sound('chest');burstAtElement(last,'✧',45)};$('dreamStars').appendChild(last);
+function refreshDreams(){dreams.forEach((d,i)=>{const b=$('dreamStars').children[i];b.classList.toggle('discovered',foundDreams.has(i));b.querySelector('small').textContent=foundDreams.has(i)?'✦ Descubierta':'Por descubrir'});$('dreamCount').textContent=foundDreams.size+' de 5 estrellas descubiertas';last.classList.toggle('hidden',foundDreams.size!==5)}
+function openLetter(){if($('envelope').classList.contains('open'))return;$('envelope').classList.add('open');openedLetter=true;save();progress();sound('chest');burstAtElement($('envelope'),'♥',26);$('letterHint').textContent='✦ Para ti, con todo mi amor ✦';letterTimer=setTimeout(()=>{$('paper').classList.remove('hidden');$('paper').scrollIntoView({behavior:motionOff?'instant':'smooth',block:'start'})},motionOff?100:1050)}
+function closeLetter(){clearTimeout(letterTimer);$('paper').classList.add('hidden');$('envelope').classList.remove('open');$('letterHint').textContent='✦ Toca el sello para abrir tu carta ✦';$('envelope').scrollIntoView({behavior:motionOff?'instant':'smooth',block:'center'})}
+const milestones=[['🌷','Nos hicimos novios','2026-07-18'],['💗','Un mes juntos','2026-08-18'],['🌙','Tres meses juntos','2026-10-18'],['✨','100 días juntos','2026-10-26'],['🎀','Seis meses juntos','2027-01-18'],['👑','Nuestro primer aniversario','2027-07-18'],['♾️','Dos años juntos','2028-07-18']];
+const fmt=new Intl.DateTimeFormat('es-ES',{day:'numeric',month:'long',year:'numeric',timeZone:'America/Sao_Paulo'});const pad=n=>String(n).padStart(2,'0');
+function clock(){const now=new Date(),s=Math.max(0,Math.floor((now-START)/1000));$('days').textContent=Math.floor(s/86400).toLocaleString('es-ES');$('hours').textContent=pad(Math.floor(s/3600)%24);$('minutes').textContent=pad(Math.floor(s/60)%60);$('seconds').textContent=pad(s%60);$('anniversaries').innerHTML=milestones.map(m=>{const d=new Date(m[2]+'T00:00:00-03:00'),done=now>=d;return `<div class="milestone glass"><span class="emoji">${m[0]}</span><div><h3>${m[1]}</h3><p>${fmt.format(d)}</p></div><small>${done?'✦ Vivido':'Por vivir'}</small></div>`}).join('');const next=milestones.find(m=>new Date(m[2]+'T00:00:00-03:00')>now);if(next){const d=new Date(next[2]+'T00:00:00-03:00');$('nextAnniversary').textContent=next[1];$('nextCountdown').textContent='Faltan aproximadamente '+Math.ceil((d-now)/86400000)+' días · '+fmt.format(d)}else{$('nextAnniversary').textContent='Nuestra historia continúa';$('nextCountdown').textContent='Nuevos capítulos por descubrir ♥'}}
+setInterval(()=>{if(active==='time')clock()},1000);
+const books=[['✈️','Viajes por hacer','#805273','Sueño con descubrir ciudades, paisajes y aventuras nuevas contigo. Cada viaje puede ser otro recuerdo que guardemos en nuestro museo.'],['🏡','Nuestros días','#5e486e','Quiero disfrutar contigo las cosas sencillas: una conversación, una tarde tranquila y esos momentos que se vuelven inolvidables.'],['🌌','Lugares mágicos','#6a568e','Hay tantos lugares que todavía no conocemos. Me emociona imaginar que algunos los descubriremos juntos.'],['♾️','Páginas infinitas','#98647e','Quiero que este libro siga teniendo páginas. Algunas serán fáciles, otras difíciles, pero deseo compartir muchas contigo.']];
+books.forEach(b=>{const el=document.createElement('button');el.className='book';el.style.setProperty('--cover',b[2]);el.innerHTML=`<span class="emoji">${b[0]}</span><strong>${b[1]}</strong><small>TOCA PARA LEER</small>`;el.onclick=()=>openModal({icon:b[0],label:'Biblioteca del Futuro',title:b[1],text:b[3]});$('books').appendChild(el)});
+const capsules=[['🌧️','Cuando tengas un día difícil','No todos los días tienen que ser perfectos. Quiero que recuerdes que eres muy importante para mí y que puedes contar conmigo.'],['💗','Cuando me extrañes','Aunque no estemos cerca en algún momento, hay algo que no cambia: las ganas que tengo de compartir mi tiempo contigo.'],['🌞','Cuando quieras sonreír','Piensa en nuestro viaje a Campos do Jordão, en aquel ramo de flores y en todas las cosas bonitas que todavía nos esperan.'],['✨','Cuando necesites ánimo','Admiro tu forma de ser y tu sonrisa. Confío en que puedes seguir adelante, paso a paso, incluso cuando algo se haga difícil.']];
+capsules.forEach(c=>{const b=document.createElement('button');b.className='capsule';b.innerHTML=`<span class="emoji">${c[0]}</span><strong>${c[1]}</strong><small>ABRIR CÁPSULA ✦</small>`;b.onclick=()=>openModal({icon:c[0],label:'Cápsula del Corazón',title:c[1],text:c[2]});$('capsulesGrid').appendChild(b)});
+
+/* Efectos gráficos procedurales: no hay imágenes, descargas ni bibliotecas de pago. */
+function burstAtElement(target,glyph='✦',amount=12){
+  if(motionOff||!target)return;
+  const r=target.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+  for(let i=0;i<amount;i++){
+    const el=document.createElement('span');el.className='burst';el.textContent=glyph;
+    const angle=Math.PI*2*(i/amount)+Math.random()*.3;
+    const radius=65+Math.random()*120;
+    el.style.left=cx+'px';el.style.top=cy+'px';
+    el.style.setProperty('--dx',Math.cos(angle)*radius+'px');
+    el.style.setProperty('--dy',Math.sin(angle)*radius+'px');
+    el.style.setProperty('--dr',(Math.random()*280-140)+'deg');
+    el.style.setProperty('--delay',Math.random()*.15+'s');
+    el.style.fontSize=(13+Math.random()*14)+'px';
+    $('trail').appendChild(el);setTimeout(()=>el.remove(),1250);
+  }
+}
+/* Luces reactivas del gran salón. */
+const hall=document.querySelector('.hall');
+if(hall){
+  hall.addEventListener('pointermove',e=>{
+    if(motionOff||e.pointerType==='touch')return;
+    const rect=hall.getBoundingClientRect();
+    const x=(e.clientX-rect.left)/rect.width-.5;
+    const y=(e.clientY-rect.top)/rect.height-.5;
+    hall.style.setProperty('--hx',(x*22)+'px');
+    hall.style.setProperty('--hy',(y*15)+'px');
+    hall.style.setProperty('--spotx',((x+.5)*100)+'%');
+    hall.style.setProperty('--spoty',((y+.5)*100)+'%');
+  });
+  hall.addEventListener('pointerleave',()=>{
+    hall.style.setProperty('--hx','0px');hall.style.setProperty('--hy','0px');
+  });
+}
+/* Animación ligera de nebulosa sobre canvas, con ahorro de batería. */
+const nebulaCanvas=document.createElement('canvas');
+nebulaCanvas.id='nebulaCanvas';nebulaCanvas.setAttribute('aria-hidden','true');
+$('sky').prepend(nebulaCanvas);
+const ctx=nebulaCanvas.getContext('2d',{alpha:true});
+let visualWidth=0,visualHeight=0,nebulaFrame=0;
+const nebulaStars=Array.from({length:72},()=>({x:Math.random(),y:Math.random(),s:.3+Math.random()*1.4,phase:Math.random()*6.28}));
+function sizeCanvas(){
+  if(!ctx)return;
+  const dpr=Math.min(devicePixelRatio||1,1.5);
+  visualWidth=innerWidth;visualHeight=innerHeight;
+  nebulaCanvas.width=Math.round(visualWidth*dpr);
+  nebulaCanvas.height=Math.round(visualHeight*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+sizeCanvas();window.addEventListener('resize',sizeCanvas,{passive:true});
+function drawNebula(t){
+  if(!ctx)return;
+  if(motionOff||document.visibilityState==='hidden'){
+    ctx.clearRect(0,0,visualWidth,visualHeight);
+    return;
+  }
+  ctx.clearRect(0,0,visualWidth,visualHeight);
+  const time=t*.00015;
+  const palettes={home:['138,85,176','218,124,166'],portal:['218,153,101','138,85,176'],hall:['150,102,199','221,161,105'],history:['110,115,198','210,142,160'],garden:['82,164,138','218,113,158'],dreams:['79,123,222','185,128,224'],letter:['228,138,178','242,194,130'],time:['222,157,111','125,109,188'],library:['133,89,185','222,169,100'],capsules:['149,102,206','231,130,173']};
+  const colors=palettes[active]||palettes.home;
+  for(let k=0;k<2;k++){
+    const cx=visualWidth*(k?.7:.25)+Math.sin(time*1.2+k)*visualWidth*.09;
+    const cy=visualHeight*(k?.7:.28)+Math.cos(time*.83+k)*visualHeight*.13;
+    const radius=Math.max(visualWidth,visualHeight)*.52;
+    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,radius);
+    g.addColorStop(0,`rgba(${colors[k]},.115)`);
+    g.addColorStop(.45,`rgba(${colors[k]},.035)`);
+    g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=g;ctx.fillRect(0,0,visualWidth,visualHeight);
+  }
+  for(const s of nebulaStars){
+    const opacity=.16+(1+Math.sin(t*.0012+s.phase))*.24;
+    ctx.fillStyle=`rgba(255,232,193,${opacity})`;
+    ctx.beginPath();ctx.arc(s.x*visualWidth,s.y*visualHeight,s.s,0,Math.PI*2);ctx.fill();
+  }
+}
+let lastNebulaAt=0;
+function nebulaLoop(t){
+  if(t-lastNebulaAt>45){drawNebula(t);lastNebulaAt=t;}
+  requestAnimationFrame(nebulaLoop);
+}
+requestAnimationFrame(nebulaLoop);
+
+refreshFlowers();refreshDreams();progress();clock();
+if(motionOff){document.body.classList.add('no-motion');$('motion').textContent='✧ Sin efectos';$('motion').setAttribute('aria-pressed','true')}
+</script>
+</body>
+</html>
